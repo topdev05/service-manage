@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
-export default async function AdminPage() {
+export default async function ProjectPage() {
+
     const projects = await prisma.project.findMany({ orderBy: { createdAt: "desc" } });
     
-
     return(
         <ul className="space-y-2">
           {projects.map((p) => (

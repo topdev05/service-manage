@@ -1,19 +1,24 @@
-// apps/web/app/loading.tsx
-export default function GlobalLoading() {
+export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="flex flex-col items-center gap-6">
-        {/* Spinner */}
-        <div className="relative w-14 h-14">
-          <div className="absolute inset-0 rounded-full border-4 border-zinc-300 dark:border-zinc-700" />
-          <div className="absolute inset-0 rounded-full border-4 border-black dark:border-white border-t-transparent animate-spin" />
-        </div>
+    <main className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-white dark:bg-zinc-950">
+      <div className="flex flex-col items-center">
+        {/* Brand */}
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+          Portfolio
+          <span className="text-zinc-400 dark:text-zinc-600">.v3</span>
+        </h1>
 
-        {/* Text */}
-        <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300 tracking-wide">
-          Loading experience...
-        </p>
+        {/* Loading */}
+        <div className="mt-4 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+          <span>Loading</span>
+
+          <span className="flex gap-1">
+            <span className="h-1 w-1 animate-pulse rounded-full bg-current" />
+            <span className="h-1 w-1 animate-pulse rounded-full bg-current [animation-delay:150ms]" />
+            <span className="h-1 w-1 animate-pulse rounded-full bg-current [animation-delay:300ms]" />
+          </span>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

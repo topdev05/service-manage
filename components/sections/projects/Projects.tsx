@@ -3,17 +3,10 @@
 import Link from "next/link";
 import { motion, Variants } from "motion/react";
 import { Project } from "@/types";
+import { formatTitle } from "@/lib/utils";
+import Tag from "@/components/ui/Tag";
+import ProjectCard from "./ProjectCard";
 
-/* =========================
-   UTIL
-========================= */
-
-const formatTitle = (t: string) =>
-  t
-    .replace(/[-_.]/g, " ")
-    .split(" ")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
 
 /* =========================
    ANIMATION
@@ -33,10 +26,7 @@ const container: Variants = {
   },
 };
 
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+
 
 /* =========================
    DATA
@@ -113,81 +103,9 @@ export const projects: Project[] = [
   },
 ];
 
-/* =========================
-   UI: TAG
-========================= */
 
-const Tag = ({ label }: { label: string }) => (
-  <span className="text-xs italic px-1.5 text-[var(--foreground)]/50 group-hover:text-[var(--foreground)]/80 transition-colors">
-    {label}
-  </span>
-);
 
-/* =========================
-   UI: CARD
-========================= */
 
-const ProjectCard = ({ project }: { project: Project }) => {
-  const href = project.link || project.github || null;
-  const isClickable = Boolean(href);
-
-  return (
-    <motion.a
-      variants={item}
-      {...(href
-        ? {
-          href,
-          target: "_blank",
-          rel: "noopener noreferrer",
-        }
-        : {})}
-      className={`
-    group relative rounded-xl p-5 overflow-hidden
-    border border-[var(--foreground)]/5
-  bg-gray-50/60 dark:bg-white/[0.02]
-    transition-all duration-300
-    ${!href ? "opacity-60 pointer-events-none" : ""}
-  `}
-    >
-      {/* hover glow */}
-      <div
-        className="
-    pointer-events-none absolute inset-0 rounded-2xl
-
-    opacity-0 scale-95
-    group-hover:opacity-100 group-hover:scale-100
-
-    transition-all duration-500 ease-out
-
-    bg-[radial-gradient(600px_circle_at_center,rgba(0,0,0,0.06),transparent_60%)]
-    dark:bg-[radial-gradient(600px_circle_at_center,rgba(255,255,255,0.08),transparent_65%)]
-  "
-      />
-      {/* glow line */}
-      <span className="absolute w-[40%] -bottom-px right-0 h-px bg-[var(--accent)]/30" />
-
-      {/* content */}
-      <div className="relative z-10 flex flex-col h-full justify-between">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">
-            {formatTitle(project.title)}
-          </h3>
-
-          <p className="text-sm leading-6 text-[var(--foreground)]/70">
-            {project.description}
-          </p>
-        </div>
-
-        {/* tags */}
-        <div className="mt-4 flex flex-wrap gap-1">
-          {project.tags.map((tag) => (
-            <Tag key={tag} label={tag} />
-          ))}
-        </div>
-      </div>
-    </motion.a>
-  );
-};
 
 /* =========================
    MAIN COMPONENT
